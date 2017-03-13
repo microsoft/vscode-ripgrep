@@ -15,4 +15,5 @@ switch (opts.platform) {
 
 download(opts).catch(err => {
     console.error(`Downloading ripgrep failed: ${err.toString()}`);
+    process.exit(1);
 });
