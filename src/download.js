@@ -56,7 +56,7 @@ function download(opts, assetName, downloadDest) {
                 ostream.on('close', () => resolve(assetDownloadPath));
             });
         });
-    })
+    });
 }
 
 function unzip(zipPath, destinationDir) {
@@ -80,7 +80,7 @@ function unzip(zipPath, destinationDir) {
                 });
             });
         });
-    })
+    });
 }
 
 module.exports = opts => {
@@ -108,8 +108,8 @@ module.exports = opts => {
 
             download(opts, assetName, tmpDir).then(assetDownloadPath => {
                 console.log(`Unzipping to ${assetDestinationDir}`);
-                unzip(assetDownloadPath, assetDestinationDir)
+                unzip(assetDownloadPath, assetDestinationDir);
             }, reject);
         });
     });
-}
+};
