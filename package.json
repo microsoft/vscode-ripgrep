@@ -1,6 +1,6 @@
 {
   "name": "vscode-ripgrep",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Downloads the ripgrep binary shipped in VS Code",
   "scripts": {
     "postinstall": "node ./src/postinstall.js"
@@ -11,6 +11,6 @@
     "github-releases": "^0.3.2",
     "mkdirp": "^0.5.1",
     "progress": "^1.1.8",
-    "yauzl": "^2.7.0"
+    "yauzl": "2.3.1"
   }
 }
