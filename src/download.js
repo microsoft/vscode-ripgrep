@@ -108,7 +108,7 @@ module.exports = opts => {
 
             download(opts, assetName, tmpDir).then(assetDownloadPath => {
                 console.log(`Unzipping to ${assetDestinationDir}`);
-                unzip(assetDownloadPath, assetDestinationDir);
+                return unzip(assetDownloadPath, assetDestinationDir);
             }, reject);
         });
     });
