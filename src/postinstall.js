@@ -3,7 +3,8 @@ const download = require('./download');
 
 const opts = {
     platform: os.platform(),
-    version: '0.5.0'
+    version: '0.5.0',
+    token: process.env['GITHUB_TOKEN']
 };
 
 switch (opts.platform) {
