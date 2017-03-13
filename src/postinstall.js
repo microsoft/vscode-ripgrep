@@ -7,8 +7,6 @@ const opts = {
     version: '0.5.0'
 };
 
-download(opts).then(() => {
-    console.log('success');
-}, err => {
-    console.log(`fail: ${err.toString()}`);
+download(opts).catch(err => {
+    console.error(`Downloading ripgrep failed: ${err.toString()}`);
 });
