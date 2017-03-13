@@ -92,14 +92,6 @@ module.exports = opts => {
         return Promise.reject(new Error('Missing platform'));
     }
 
-    if (!opts.arch) {
-        switch (opts.platform) {
-            case 'darwin': opts.arch = 'x64'; break;
-            case 'win32': opts.arch = 'ia32'; break;
-            case 'linux': opts.arch = 'ia32'; break;
-        }
-    }
-
     const assetName = ['ripgrep', opts.version, opts.platform, opts.arch].join('-') + '.zip';
 
     return new Promise((resolve, reject) => {
