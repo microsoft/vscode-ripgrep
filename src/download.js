@@ -101,13 +101,15 @@ module.exports = opts => {
                 .then(assetDownloadPath => {
                     console.log(`Unzipping to ${assetDestinationDir}`);
                     return unzip(assetDownloadPath, assetDestinationDir);
-                }, reject)
+                })
                 .then(destinationPath => {
-                    fs.chmod(destinationPath, '755', err => {
-                        if (err) reject(err);
-                        else resolve();
-                    });
-                });
+                    if (os.platform() !== 'win32') {
+                        fs.chmod(destinationPath, '755', err => {
+                            if (err) reject(err);
+                            else resolve();
+                        });
+                    }
+                }).catch(reject);
         });
     });
 };
