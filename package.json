@@ -2,6 +2,10 @@
   "name": "vscode-ripgrep",
   "version": "0.0.7",
   "description": "Downloads the ripgrep binary shipped in VS Code",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roblourens/vscode-ripgrep"
+  },
   "scripts": {
     "postinstall": "node ./src/postinstall.js"
   },
