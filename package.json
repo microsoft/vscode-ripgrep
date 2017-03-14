@@ -1,6 +1,6 @@
 {
   "name": "vscode-ripgrep",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Downloads the ripgrep binary shipped in VS Code",
   "repository": {
     "type": "git",

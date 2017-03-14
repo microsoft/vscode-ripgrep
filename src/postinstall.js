@@ -10,7 +10,7 @@ const opts = {
 switch (opts.platform) {
     case 'darwin': opts.arch = 'x64'; break;
     case 'win32': opts.arch = 'ia32'; break;
-    case 'linux': opts.arch = os.arch(); break;
+    case 'linux': opts.arch = process.env.VSCODE_ELECTRON_PLATFORM || os.arch(); break;
     default: throw new Error('Unknown platform: ' + opts.platform);
 }
 
