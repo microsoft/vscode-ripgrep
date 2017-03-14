@@ -74,7 +74,7 @@ function unzip(zipPath, destinationDir) {
                         readStream.pipe(fs.createWriteStream(destinationPath));
 
                         // There should only be one entry...
-                        readStream.on('end', resolve);
+                        readStream.on('end', () => resolve(destinationPath));
                     });
                 });
             });
@@ -97,10 +97,17 @@ module.exports = opts => {
         mkdirp(tmpDir, err => {
             if (err) return reject(err);
 
-            download(opts, assetName, tmpDir).then(assetDownloadPath => {
-                console.log(`Unzipping to ${assetDestinationDir}`);
-                return unzip(assetDownloadPath, assetDestinationDir);
-            }, reject);
+            download(opts, assetName, tmpDir)
+                .then(assetDownloadPath => {
+                    console.log(`Unzipping to ${assetDestinationDir}`);
+                    return unzip(assetDownloadPath, assetDestinationDir);
+                }, reject)
+                .then(destinationPath => {
+                    fs.chmod(destinationPath, '755', err => {
+                        if (err) reject(err);
+                        else resolve();
+                    });
+                });
         });
     });
 };
