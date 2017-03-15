@@ -1,14 +1,15 @@
 {
   "name": "vscode-ripgrep",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Downloads the ripgrep binary shipped in VS Code",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/roblourens/vscode-ripgrep"
   },
   "scripts": {
-    "postinstall": "node ./src/postinstall.js"
+    "postinstall": "node ./dist/postinstall.js"
   },
   "author": "Rob Lourens",
   "license": "MIT",
