@@ -36,6 +36,10 @@ function download(opts, assetName, downloadDest) {
             const assetDownloadPath = path.join(downloadDest, assetName);
 
             github.downloadAsset(asset, (error, istream) => {
+                if (error) {
+                    return reject(error);
+                }
+
                 console.log(`Downloading to ${assetDownloadPath}`);
                 if (process.stdout.isTTY && !opts.quiet) {
                     const bar = new ProgressBar('↓ ' + asset.name + ' [:bar] :percent', {
