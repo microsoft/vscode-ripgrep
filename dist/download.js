@@ -64,6 +64,7 @@ function unzip(zipPath, destinationDir) {
         yauzl.open(zipPath, { lazyEntries: true }, (err, zipFile) => {
             if (err) return reject(err);
 
+            zipFile.readEntry();
             zipFile.on('entry', entry => {
                 zipFile.openReadStream(entry, (err, readStream) => {
                     if (err) return reject(err);
