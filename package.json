@@ -1,6 +1,6 @@
 {
   "name": "vscode-ripgrep",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "Downloads the ripgrep binary shipped in VS Code",
   "main": "dist/index.js",
   "repository": {
@@ -12,7 +12,7 @@
   },
   "author": "Rob Lourens",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "github-releases": "^0.3.2",
     "mkdirp": "^0.5.1",
     "progress": "^1.1.8",
