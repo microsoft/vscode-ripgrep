@@ -3,21 +3,17 @@
 const { existsP, renameP, node_modules_path, _node_modules_path } = require('./common.js');
 
 if (shouldRun()) {
-    return fixNodeModules();
-}
-
-function fixNodeModules() {
-    return existsP(_node_modules_path).then(exists => {
+    existsP(_node_modules_path).then(exists => {
         if (exists) {
             console.log('Publishing ./_node_modules folder that already exists');
         } else {
-            existsP(node_modules_path).then(exists => {
+            return existsP(node_modules_path).then(exists => {
                 if (exists) {
                     return renameP(node_modules_path, _node_modules_path).then(() => {
                         console.log('Renamed node_modules to _node_modules for publish');
                     });
                 } else {
-                    throw new Error('No node_modules or _node_modules - run npm install before publishing');
+                    throw new Error('No node_modules or _node_modules - run `npm install --ignore-scripts` before publishing');
                 }
             });
         }
@@ -30,6 +26,12 @@ function fixNodeModules() {
 }
 
 function shouldRun() {
-    const npmConfigArgv = JSON.parse(process.env['npm_config_argv']);
-    return npmConfigArgv && npmConfigArgv.cooked && npmConfigArgv.cooked[0].startsWith('p'); // publish or package
+    const npmConfigArgv = process.env['npm_config_argv'];
+    if (!npmConfigArgv) {
+        // Script invoked directly
+        return true;
+    }
+
+    const npmConfig = JSON.parse(process.env['npm_config_argv']);
+    return npmConfig && npmConfig.cooked && npmConfig.cooked[0] && npmConfig.cooked[0].startsWith('p'); // publish or package
 }
