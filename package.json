@@ -8,6 +8,7 @@
     "url": "https://github.com/roblourens/vscode-ripgrep"
   },
   "scripts": {
+    "prepublish": "node ./dist/prepublish.js",
     "postinstall": "node ./dist/postinstall.js"
   },
   "author": "Rob Lourens",
