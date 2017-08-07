@@ -1,3 +1,4 @@
+// @ts-check
 'use strict';
 
 const path = require('path');
@@ -15,7 +16,8 @@ const assetDestinationDir = path.join(__dirname, '../bin');
 function download(opts, assetName, downloadDest) {
     return new Promise((resolve, reject) => {
         const github = new GitHub({
-            repo: 'roblourens/ripgrep',
+            user: 'roblourens',
+            repo: 'ripgrep',
             token: opts.token
         });
 
