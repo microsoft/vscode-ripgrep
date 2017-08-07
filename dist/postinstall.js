@@ -3,15 +3,16 @@
 
 const fs = require('fs');
 const os = require('os');
+const { existsP, renameP, node_modules_path, _node_modules_path } = require('./common.js');
 
-existsP('./node_modules').then(exists => {
+existsP(node_modules_path).then(exists => {
     if (exists) {
         console.log('Using node_modules which already exists');
     } else {
-        return existsP('./_node_modules').then(exists => {
+        return existsP(_node_modules_path).then(exists => {
             if (exists) {
                 console.log('Renaming _node_modules => node_modules');
-                return renameP('./_node_modules', './node_modules');
+                return renameP(_node_modules_path, node_modules_path);
             }
             else throw new Error('Missing ./_node_modules...');
         });
@@ -38,25 +39,3 @@ existsP('./node_modules').then(exists => {
     console.error(`Downloading ripgrep failed: ${err.toString()}`);
     process.exit(1);
 });
-
-function existsP(testPath) {
-    return new Promise(resolve => fs.exists(testPath, resolve));
-}
-
-function renameP(oldPath, newPath) {
-    return new Promise((resolve, reject) => {
-        fs.rename(oldPath, newPath, err => {
-            if (err) reject(err)
-            else resolve();
-        });
-    });
-}
-
-function rmdirP(target) {
-    return new Promise((resolve, reject) => {
-        fs.rmdir(target, err => {
-            if (err) reject(err);
-            else resolve();
-        });
-    });
-}
