@@ -4,13 +4,15 @@
 const fs = require('fs');
 const os = require('os');
 
-existsP('./_node_modules').then(exists => {
+existsP('./node_modules').then(exists => {
     if (exists) {
-        console.log('Renaming _node_modules => node_modules');
-        return renameP('./_node_modules', './node_modules');
+        console.log('Using node_modules which already exists');
     } else {
-        return existsP('./node_modules').then(exists => {
-            if (exists) console.log('Using node_modules which already exists');
+        return existsP('./_node_modules').then(exists => {
+            if (exists) {
+                console.log('Renaming _node_modules => node_modules');
+                return renameP('./_node_modules', './node_modules');
+            }
             else throw new Error('Missing ./_node_modules...');
         });
     }
