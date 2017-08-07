@@ -35,7 +35,17 @@ existsP(node_modules_path).then(exists => {
     }
 
     return download(opts);
+}).then(() => {
+    // Cleanup - delete node_modules
+    const rimraf = require('rimraf');
+    return rimrafP(rimraf, node_modules_path);
 }).catch(err => {
     console.error(`Downloading ripgrep failed: ${err.toString()}`);
     process.exit(1);
 });
+
+function rimrafP(rimraf, path) {
+    return new Promise(resolve => {
+        rimraf(path, resolve);
+    });
+}
