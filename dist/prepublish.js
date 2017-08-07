@@ -3,7 +3,6 @@
 const { existsP, renameP, node_modules_path, _node_modules_path } = require('./common.js');
 
 existsP(_node_modules_path).then(exists => {
-    console.log(node_modules_path);
     if (exists) {
         console.log('Publishing ./_node_modules folder that already exists');
     } else {
