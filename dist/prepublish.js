@@ -2,15 +2,16 @@
 
 const { existsP, renameP, node_modules_path, _node_modules_path } = require('./common.js');
 
-existsP(node_modules_path).then(exists => {
+existsP(_node_modules_path).then(exists => {
+    console.log(node_modules_path);
     if (exists) {
-        return renameP(node_modules_path, _node_modules_path).then(() => {
-            console.log('Renamed node_modules to _node_modules for publish');
-        });
+        console.log('Publishing ./_node_modules folder that already exists');
     } else {
-        existsP(_node_modules_path).then(exists => {
+        existsP(node_modules_path).then(exists => {
             if (exists) {
-                console.log('Publishing ./_node_modules folder that already exists');
+                return renameP(node_modules_path, _node_modules_path).then(() => {
+                    console.log('Renamed node_modules to _node_modules for publish');
+                });
             } else {
                 throw new Error('No node_modules or _node_modules - run npm install before publishing');
             }
