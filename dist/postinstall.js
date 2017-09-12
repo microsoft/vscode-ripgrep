@@ -29,7 +29,10 @@ existsP(node_modules_path).then(exists => {
 
     switch (opts.platform) {
         case 'darwin': opts.arch = 'x64'; break;
-        case 'win32': opts.arch = 'ia32'; break;
+        case 'win32': 
+            opts.arch = 'ia32';
+            opts.version = '0.5.1-patch.1';
+            break;
         case 'linux': opts.arch = process.env.VSCODE_ELECTRON_PLATFORM || os.arch(); break;
         default: throw new Error('Unknown platform: ' + opts.platform);
     }
