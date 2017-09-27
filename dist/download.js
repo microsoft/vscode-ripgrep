@@ -110,7 +110,9 @@ module.exports = opts => {
                     return unzip(assetDownloadPath, assetDestinationDir);
                 })
                 .then(destinationPath => {
-                    if (os.platform() !== 'win32') {
+                    if (os.platform() === 'win32') {
+                        resolve();
+                    } else {
                         fs.chmod(destinationPath, '755', err => {
                             if (err) reject(err);
                             else resolve();
