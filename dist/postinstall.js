@@ -5,6 +5,8 @@ const fs = require('fs');
 const os = require('os');
 const { existsP, renameP, node_modules_path, _node_modules_path } = require('./common.js');
 
+const version = '0.6.0-patch.0';
+
 existsP(node_modules_path).then(exists => {
     if (exists) {
         console.log('Using node_modules which already exists');
@@ -23,17 +25,18 @@ existsP(node_modules_path).then(exists => {
 
     const opts = {
         platform: os.platform(),
-        version: '0.5.1-patch.0',
+        version,
         token: process.env['GITHUB_TOKEN']
     };
 
     switch (opts.platform) {
-        case 'darwin': opts.arch = 'x64'; break;
-        case 'win32': 
-            opts.arch = 'ia32';
-            opts.version = '0.5.1-patch.1';
+        case 'darwin':
+            opts.arch = 'x64';
             break;
-        case 'linux': opts.arch = process.env.VSCODE_ELECTRON_PLATFORM || os.arch(); break;
+        case 'win32':
+        case 'linux':
+            opts.arch = process.env.VSCODE_ELECTRON_PLATFORM || os.arch();
+            break;
         default: throw new Error('Unknown platform: ' + opts.platform);
     }
 
