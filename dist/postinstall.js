@@ -35,7 +35,7 @@ existsP(node_modules_path).then(exists => {
             break;
         case 'win32':
         case 'linux':
-            opts.arch = process.env.VSCODE_ELECTRON_PLATFORM || os.arch();
+            opts.arch = process.env.npm_config_arch || os.arch();
             break;
         default: throw new Error('Unknown platform: ' + opts.platform);
     }
