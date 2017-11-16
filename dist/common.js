@@ -5,6 +5,7 @@ const fs = require('fs');
 
 exports.node_modules_path = path.resolve(__dirname, '../node_modules');
 exports._node_modules_path = path.resolve(__dirname, '../_node_modules');
+exports.binPath = path.join(__dirname, '../bin');
 
 exports.existsP = testPath => {
     return new Promise(resolve => fs.exists(testPath, resolve));

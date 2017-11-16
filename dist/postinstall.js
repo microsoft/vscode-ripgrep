@@ -3,11 +3,18 @@
 
 const fs = require('fs');
 const os = require('os');
-const { existsP, renameP, node_modules_path, _node_modules_path } = require('./common.js');
+const { existsP, renameP, node_modules_path, _node_modules_path, binPath } = require('./common.js');
 
 const version = '0.6.0-patch.0';
 
-existsP(node_modules_path).then(exists => {
+existsP(binPath).then(binExists => {
+    if (binExists) {
+        console.log('bin/ folder already exists');
+        process.exit();
+    } else {
+        return existsP(node_modules_path);
+    }
+}).then(exists => {
     if (exists) {
         console.log('Using node_modules which already exists');
     } else {

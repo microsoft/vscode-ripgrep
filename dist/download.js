@@ -11,7 +11,7 @@ const yauzl = require('yauzl');
 const mkdirp = require('mkdirp');
 
 const tmpDir = path.join(os.tmpdir(), 'vscode-ripgrep-cache');
-const assetDestinationDir = path.join(__dirname, '../bin');
+const { binPath } = require('./common');
 
 function download(opts, assetName, downloadDest) {
     return new Promise((resolve, reject) => {
@@ -106,8 +106,8 @@ module.exports = opts => {
 
             download(opts, assetName, tmpDir)
                 .then(assetDownloadPath => {
-                    console.log(`Unzipping to ${assetDestinationDir}`);
-                    return unzip(assetDownloadPath, assetDestinationDir);
+                    console.log(`Unzipping to ${binPath}`);
+                    return unzip(assetDownloadPath, binPath);
                 })
                 .then(destinationPath => {
                     if (os.platform() === 'win32') {
