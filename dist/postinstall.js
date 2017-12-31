@@ -5,7 +5,7 @@ const fs = require('fs');
 const os = require('os');
 const { existsP, renameP, node_modules_path, _node_modules_path, binPath } = require('./common.js');
 
-const version = '0.6.0-patch.0';
+const version = '0.7.1-patch.0';
 
 existsP(binPath).then(binExists => {
     if (binExists) {
