@@ -10,7 +10,7 @@ const version = '0.7.1-patch.1';
 existsP(binPath).then(binExists => {
     if (binExists) {
         console.log('bin/ folder already exists');
-        process.exit();
+        return earlyCleanup().then(() => process.exit())
     } else {
         return existsP(node_modules_path);
     }
@@ -49,9 +49,7 @@ existsP(binPath).then(binExists => {
 
     return download(opts);
 }).then(() => {
-    // Cleanup - delete node_modules
-    const rimraf = require('rimraf');
-    return rimrafP(rimraf, node_modules_path);
+    return cleanup();
 }).catch(err => {
     console.error(`Downloading ripgrep failed: ${err.toString()}`);
     process.exit(1);
@@ -61,4 +59,16 @@ function rimrafP(rimraf, path) {
     return new Promise(resolve => {
         rimraf(path, resolve);
     });
+}
+
+function earlyCleanup() {
+    return existsP(_node_modules_path)
+        .then(exists => exists && renameP(_node_modules_path, node_modules_path))
+        .then(() => cleanup());
+}
+
+function cleanup() {
+    // Cleanup - delete node_modules and also _node_modules just for good measure
+    const rimraf = require('rimraf');
+    return rimrafP(rimraf, node_modules_path);
 }
