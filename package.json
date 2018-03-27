@@ -3,6 +3,7 @@
   "version": "0.8.1",
   "description": "Downloads the ripgrep binary shipped in VS Code",
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/roblourens/vscode-ripgrep"
