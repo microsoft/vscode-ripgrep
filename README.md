@@ -4,4 +4,4 @@ Downloads the ripgrep binary shipped in VS Code
 
 Runs on postinstall
 
-How the ripgrep builds are produced: https://github.com/roblourens/ripgrep/wiki/VS-Code-Build
+How the ripgrep builds are produced: https://github.com/roblourens/ripgrep/wiki
