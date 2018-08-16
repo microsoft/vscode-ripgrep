@@ -1,6 +1,6 @@
 {
   "name": "vscode-ripgrep",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Downloads the ripgrep binary shipped in VS Code",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
