@@ -10,3 +10,7 @@ zip -j "ripgrep-$1-linux-ia32.zip" ./target/i686-unknown-linux-musl/release/rg
 cargo build --release --target=arm-unknown-linux-gnueabihf
 arm-linux-gnueabi-strip ./target/arm-unknown-linux-gnueabihf/release/rg
 zip -j "ripgrep-$1-linux-arm.zip" ./target/arm-unknown-linux-gnueabihf/release/rg
+
+cargo build --release --target=aarch64-unknown-linux-gnu
+aarch64-linux-gnu-strip ./target/aarch64-unknown-linux-gnu/release/rg
+zip -j "ripgrep-$1-linux-arm64.zip" ./target/aarch64-unknown-linux-gnu/release/rg
