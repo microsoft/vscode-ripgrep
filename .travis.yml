@@ -1,0 +1,22 @@
+language: bash
+
+os : linux-ppc64le
+
+addons:
+  apt:
+    packages:
+      - zip
+      - cargo
+
+rust: 1.32.0
+
+script:
+  - sh run_ripgrep_build.sh
+
+deploy:
+  provider: releases
+  api_key: "$api_key"
+  file: "/home/travis/ripgrep/ripgrep-linux-ppc64le.zip"
+  skip_cleanup: true
+  on:
+    tags: true
