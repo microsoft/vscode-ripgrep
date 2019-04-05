@@ -1,22 +1,23 @@
 language: bash
-
-os : linux-ppc64le
-
+os: linux-ppc64le
 addons:
   apt:
     packages:
-      - zip
-      - cargo
+    - zip
+    - cargo
 
 rust: 1.32.0
 
 script:
-  - sh run_ripgrep_build.sh
+- sh run_ripgrep_build.sh
 
 deploy:
   provider: releases
-  api_key: "$api_key"
+  api_key:
+    secure: GdSVWhK+VhLy3PJVQIqHicMpmOuyt9vyHfG0fmSpa+hpvEoMDupW9ueyxM5d1DeakjoVpZPIVs12ShC2SD6AX5fGeZPQsKxONd5JETLRnhUametPfpvITuMsfuz0LUuEDVcenUZzyCs0eWJQGEkfsPfH6D46iUjn6uKTHjBwYuxC9wfRp3cjGDXoJNApWJdLOFclZFpMUcLu1Tk2q4Q2jLCYXxPjvV1nZnNeJjSK15UjLYGW5XrwtkI2wgS1p5O4lQy44pbbY3Q7dmKM1Nl0JedDwovf4inL+pjIj+6+SnbmZzhL2AvHxXRCb/thJ+L+Y7dMWRWLFPfnQ8PwgPIOXD+v/k3fNDSl8pIn3ITYBWiQYp4fi10WNtoKzvLnoyCWCuoiGNuhjGxSthFXJnUkYa2Bp6jpUw8pxodeFFECKHqftgi7f7+iL9dfYBNgqhJgs42He7/Gx+vPphlkTTm7PD61dtLyL997pJXaWpBHTX0m0/SQX7Wp61bVsEKyU8OWI8s3fP6G9hixihDDTmQMJgmz3he70cp08UgPNaD4wyeNQAnKZPTp5URMBb+lCpsEnrNcCmSRX9lPA9VGSpvqY0tdxUQiP+Oy8gR3N6aSSc/TM8hcnhpTZl801GyNAECenPWtGDeYXY72EsqYpd5INTSwqyZzvcaU0DlfWOeYVkw=
   file: "/home/travis/ripgrep/ripgrep-linux-ppc64le.zip"
   skip_cleanup: true
+  draft: true
   on:
     tags: true
+    repo: roblourens/vscode-ripgrep
