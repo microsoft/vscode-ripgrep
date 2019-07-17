@@ -1,6 +1,6 @@
 # vscode-ripgrep
 
-This is an npm module for using ripgrep in a Node project. It's used by VS Code.
+This is an npm module for using [ripgrep](https://github.com/BurntSushi/ripgrep) in a Node project. It's used by VS Code.
 
 ## How it works
 
