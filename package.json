@@ -9,8 +9,6 @@
     "url": "https://github.com/roblourens/vscode-ripgrep"
   },
   "scripts": {
-    "prepublish": "in-publish && echo 'You need to use \"publish-packed\" to publish this package' && false || not-in-publish",
-    "prepublishOnly": "node ./lib/checkNpmVersion.js",
     "postinstall": "node ./lib/postinstall.js"
   },
   "author": "Rob Lourens",
