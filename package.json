@@ -6,7 +6,7 @@
   "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/roblourens/vscode-ripgrep"
+    "url": "https://github.com/microsoft/vscode-ripgrep"
   },
   "scripts": {
     "postinstall": "node ./lib/postinstall.js"
