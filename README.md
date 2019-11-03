@@ -19,3 +19,8 @@ const { rgPath } = require('vscode-ripgrep');
 ### Dev note
 
 Runtime dependencies are not allowed in this project. This code runs on postinstall, and any dependencies would only be needed for postinstall, but they would have to be declared as `dependencies`, not `devDependencies`. Then if they were not cleaned up manually, they would end up being included in any project that uses this.
+
+### Windows Power Shell for Windows 7
+- Wont Work for Power Shell 2
+- Need Latest Power Shell 5.1 
+- Get latest [Windows Managment Framework](https://www.microsoft.com/en-us/download/details.aspx?id=54616)
