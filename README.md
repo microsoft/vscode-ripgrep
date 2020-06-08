@@ -19,5 +19,3 @@ const { rgPath } = require('vscode-ripgrep');
 ### Dev note
 
 Runtime dependencies are not allowed in this project. This code runs on postinstall, and any dependencies would only be needed for postinstall, but they would have to be declared as `dependencies`, not `devDependencies`. Then if they were not cleaned up manually, they would end up being included in any project that uses this.
-
-You can test this by running `npm run postinstall -- --force`
