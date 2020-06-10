@@ -18,4 +18,4 @@ const { rgPath } = require('vscode-ripgrep');
 
 ### Dev note
 
-Runtime dependencies are not allowed in this project. This code runs on postinstall, and any dependencies would only be needed for postinstall, but they would have to be declared as `dependencies`, not `devDependencies`. Then if they were not cleaned up manually, they would end up being included in any project that uses this.
+Runtime dependencies are not allowed in this project. This code runs on postinstall, and any dependencies would only be needed for postinstall, but they would have to be declared as `dependencies`, not `devDependencies`. Then if they were not cleaned up manually, they would end up being included in any project that uses this. I allow `https-proxy-agent` as an exception because we already ship that in VS Code, and `proxy-from-env` because it's very small and much easier to use it than reimplement it.

@@ -13,8 +13,11 @@
   },
   "author": "Rob Lourens",
   "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^10.12.0",
+  "dependencies": {
     "https-proxy-agent": "^4.0.0",
-    "proxy-from-env": "^1.1.0"  }
+    "proxy-from-env": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.0"
+  }
 }
