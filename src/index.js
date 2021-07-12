@@ -1,5 +1,9 @@
-'use strict';
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
-const path = require('path');
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-module.exports.rgPath = path.join(__dirname, `../bin/rg${process.platform === 'win32' ? '.exe' : ''}`);
+export const rgPath = join(
+  __dirname,
+  `../bin/rg${process.platform === "win32" ? ".exe" : ""}`
+);

@@ -9,8 +9,8 @@ import { pipeline } from "stream/promises";
 import tar from "tar-fs";
 import { fileURLToPath } from "url";
 import VError from "verror";
-import { createUnzip } from "zlib";
 import { xdgCache } from "xdg-basedir";
+import { createUnzip } from "zlib";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -72,8 +72,12 @@ export const downloadFile = async (url, outFile) => {
  * @param {string} outDir
  */
 const unzip = async (inFile, outDir) => {
-  await mkdir(outDir, { recursive: true });
-  await pipeline(createReadStream(inFile), createUnzip());
+  try {
+    await mkdir(outDir, { recursive: true });
+    await pipeline(createReadStream(inFile), createUnzip());
+  } catch (error) {
+    throw new VError(error, `Failed to unzip "${inFile}"`);
+  }
 };
 
 /**
@@ -81,11 +85,19 @@ const unzip = async (inFile, outDir) => {
  * @param {string} outDir
  */
 const untarGz = async (inFile, outDir) => {
-  await mkdir(outDir, { recursive: true });
-  await pipeline(createReadStream(inFile), createGunzip(), tar.extract(outDir));
+  try {
+    await mkdir(outDir, { recursive: true });
+    await pipeline(
+      createReadStream(inFile),
+      createGunzip(),
+      tar.extract(outDir)
+    );
+  } catch (error) {
+    throw new VError(error, `Failed to extract "${inFile}"`);
+  }
 };
 
-const downloadRipGrep = async () => {
+export const downloadRipGrep = async () => {
   // TODO skip when bin already exists
   const target = getTarget();
   const url = `https://github.com/microsoft/ripgrep-prebuilt/releases/download/${VERSION}/ripgrep-${VERSION}-${target}`;
@@ -103,5 +115,3 @@ const downloadRipGrep = async () => {
     throw new VError(`Invalid downloadPath ${downloadPath}`);
   }
 };
-
-downloadRipGrep();
