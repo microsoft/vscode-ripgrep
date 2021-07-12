@@ -98,7 +98,6 @@ const untarGz = async (inFile, outDir) => {
 };
 
 export const downloadRipGrep = async () => {
-  // TODO skip when bin already exists
   const target = getTarget();
   const url = `https://github.com/microsoft/ripgrep-prebuilt/releases/download/${VERSION}/ripgrep-${VERSION}-${target}`;
   const downloadPath = `${xdgCache}/vscode-ripgrep/ripgrep-${VERSION}-${target}`;
