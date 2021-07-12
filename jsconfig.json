@@ -4,7 +4,7 @@
     "lib": ["esnext"],
     "checkJs": true,
     "module": "esnext",
-    "types": ["node"],
+    "types": ["node", "jest"],
     "moduleResolution": "node",
     "rootDir": ".",
     "skipLibCheck": true

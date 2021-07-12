@@ -10,7 +10,9 @@
   },
   "type": "module",
   "scripts": {
-    "postinstall": "node ./src/postinstall.js"
+    "postinstall": "node ./src/postinstall.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
   "author": "Simon Siefke",
   "license": "MIT",
@@ -23,6 +25,8 @@
     "xdg-basedir": "^5.0.1"
   },
   "devDependencies": {
-    "@types/node": "^16.3.1"
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.3.1",
+    "jest": "^27.0.6"
   }
 }
