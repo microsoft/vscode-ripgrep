@@ -1,24 +1,23 @@
 {
-  "name": "vscode-ripgrep",
+  "name": "vscode-ripgrep-github-fix",
   "version": "1.12.0",
   "description": "A module for using ripgrep in a Node project",
   "main": "src/index.js",
   "typings": "src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/vscode-ripgrep"
+    "url": "https://github.com/SimonSiefke/vscode-ripgrep"
   },
   "type": "module",
   "scripts": {
     "postinstall": "node ./src/postinstall.js"
   },
-  "author": "Rob Lourens",
+  "author": "Simon Siefke",
   "license": "MIT",
   "dependencies": {
     "extract-zip": "^2.0.1",
     "got": "^11.8.2",
     "path-exists": "^4.0.0",
-    "proxy-from-env": "^1.1.0",
     "tar-fs": "^2.1.1",
     "verror": "^1.10.0",
     "xdg-basedir": "^5.0.1"
