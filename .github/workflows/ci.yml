@@ -22,4 +22,4 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
-      # - run: npm test
+      - run: npm test
