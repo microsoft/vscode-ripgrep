@@ -9,6 +9,9 @@
     "url": "https://github.com/SimonSiefke/vscode-ripgrep"
   },
   "type": "module",
+  "files": [
+    "src"
+  ],
   "scripts": {
     "postinstall": "node ./src/postinstall.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
