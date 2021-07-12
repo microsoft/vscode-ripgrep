@@ -1,7 +1,6 @@
 import { createReadStream, createWriteStream } from "fs";
 import { mkdir } from "fs/promises";
 import got from "got";
-import { createGunzip } from "node:zlib";
 import * as os from "os";
 import { dirname, join } from "path";
 import pathExists from "path-exists";
@@ -10,7 +9,7 @@ import tar from "tar-fs";
 import { fileURLToPath } from "url";
 import VError from "verror";
 import { xdgCache } from "xdg-basedir";
-import { createUnzip } from "zlib";
+import { createGunzip, createUnzip } from "zlib";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
