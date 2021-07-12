@@ -8,6 +8,9 @@ This fork fixes the github rate limiting error `Downloading ripgrep failed: Erro
 
 ```js
 import { rgPath } = from "vscode-ripgrep-with-github-api-error-fix"
+import { spawn } from 'child-process'
 
-// child_process.spawn(rgPath, ...)
+const childProcess = spawn(rgPath, ["abc", "."], {
+  stdio: "inherit",
+});
 ```
