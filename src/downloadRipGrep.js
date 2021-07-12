@@ -63,7 +63,7 @@ export const downloadFile = async (url, outFile) => {
     await mkdir(dirname(outFile), { recursive: true });
     await pipeline(got.stream(url), createWriteStream(outFile));
   } catch (error) {
-    throw new VError(error, `Failed to download ${url}`);
+    throw new VError(error, `Failed to download "${url}"`);
   }
 };
 
