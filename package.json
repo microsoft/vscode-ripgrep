@@ -15,6 +15,7 @@
   "author": "Rob Lourens",
   "license": "MIT",
   "dependencies": {
+    "extract-zip": "^2.0.1",
     "got": "^11.8.2",
     "path-exists": "^4.0.0",
     "proxy-from-env": "^1.1.0",

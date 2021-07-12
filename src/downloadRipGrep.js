@@ -1,3 +1,4 @@
+import extractZip from "extract-zip";
 import { createReadStream, createWriteStream } from "fs";
 import { mkdir } from "fs/promises";
 import got from "got";
@@ -9,7 +10,7 @@ import tar from "tar-fs";
 import { fileURLToPath } from "url";
 import VError from "verror";
 import { xdgCache } from "xdg-basedir";
-import { createGunzip, createUnzip } from "zlib";
+import { createGunzip } from "zlib";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -73,7 +74,7 @@ export const downloadFile = async (url, outFile) => {
 const unzip = async (inFile, outDir) => {
   try {
     await mkdir(outDir, { recursive: true });
-    await pipeline(createReadStream(inFile), createUnzip());
+    await extractZip(inFile, { dir: outDir });
   } catch (error) {
     throw new VError(error, `Failed to unzip "${inFile}"`);
   }
