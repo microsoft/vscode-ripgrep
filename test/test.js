@@ -29,5 +29,5 @@ test("rgPath", async () => {
       }
     });
   });
-  expect(result).toBe("./sample-file.txt:sample text\n");
+  expect(result).toContain("sample-file.txt:sample text\n");
 });
