@@ -2,7 +2,7 @@
 
 Basically the same as [vscode-ripgrep](https://github.com/microsoft/vscode-ripgrep).
 
-This fork fixes the github rate limiting error `Downloading ripgrep failed: Error: Request failed: 403` by downloading not using the github rest api and instead downloading the files directly.
+This fork fixes the github rate limiting error `Downloading ripgrep failed: Error: Request failed: 403` by downloading the files directly instead of also using the github rest api.
 
 ### Usage example
 
