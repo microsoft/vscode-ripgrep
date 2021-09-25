@@ -12,7 +12,7 @@ $ npm install vscode-ripgrep-with-github-api-error-fix
 
 ```js
 import { rgPath } = from "vscode-ripgrep-with-github-api-error-fix"
-import { spawn } from 'child-process'
+import { spawn } from 'child_process'
 
 const childProcess = spawn(rgPath, ["abc", "."], {
   stdio: "inherit",
