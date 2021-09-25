@@ -22,14 +22,14 @@
   "dependencies": {
     "extract-zip": "^2.0.1",
     "got": "^11.8.2",
-    "path-exists": "^4.0.0",
+    "path-exists": "^5.0.0",
     "tar-fs": "^2.1.1",
     "verror": "^1.10.0",
-    "xdg-basedir": "^5.0.1"
+    "xdg-basedir": "^5.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.24",
-    "@types/node": "^16.3.1",
-    "jest": "^27.0.6"
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.1",
+    "jest": "^27.2.2"
   }
 }

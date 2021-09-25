@@ -4,7 +4,7 @@ import { mkdir } from "fs/promises";
 import got from "got";
 import * as os from "os";
 import { dirname, join } from "path";
-import pathExists from "path-exists";
+import { pathExists } from "path-exists";
 import { pipeline } from "stream/promises";
 import tar from "tar-fs";
 import { fileURLToPath } from "url";
