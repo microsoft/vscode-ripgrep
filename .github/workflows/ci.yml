@@ -12,6 +12,8 @@ jobs:
         with:
           node-version: ^16
       - run: npm i
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
   publish:
     runs-on: ubuntu-latest
     needs: build
