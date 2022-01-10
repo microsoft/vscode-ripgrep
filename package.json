@@ -1,5 +1,5 @@
 {
-  "name": "vscode-ripgrep",
+  "name": "@vscode/ripgrep",
   "version": "1.13.2",
   "description": "A module for using ripgrep in a Node project",
   "main": "lib/index.js",
