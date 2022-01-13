@@ -14,7 +14,8 @@
   "author": "Rob Lourens",
   "license": "MIT",
   "dependencies": {
-    "https-proxy-agent": "^4.0.0",
+    "agent-base": "^6.0.2",
+    "https-proxy-agent": "^5.0.0",
     "proxy-from-env": "^1.1.0"
   },
   "devDependencies": {
