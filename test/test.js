@@ -12,5 +12,5 @@ test("rgPath", async () => {
   const tmpDir = await getTmpDir();
   await writeFile(`${tmpDir}/sample-file.txt`, "sample text");
   const { stdout } = await execa(rgPath, ["sample", "."], { cwd: tmpDir });
-  expect(stdout).toContain("sample-file.txt:sample text\n");
+  expect(stdout).toContain("sample-file.txt:sample text");
 });

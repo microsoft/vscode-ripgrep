@@ -1,16 +1,15 @@
+import { execa } from "execa";
 import extractZip from "extract-zip";
-import { createReadStream, createWriteStream } from "fs";
-import { mkdir, readdir, rename, rm } from "fs/promises";
+import { createWriteStream } from "fs";
+import { mkdir, readdir } from "fs/promises";
 import got from "got";
 import * as os from "os";
 import { dirname, join } from "path";
 import { pathExists } from "path-exists";
 import { pipeline } from "stream/promises";
-import tar from "tar-fs";
 import { fileURLToPath } from "url";
 import VError from "verror";
 import { xdgCache } from "xdg-basedir";
-import { createGunzip } from "zlib";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -86,25 +85,7 @@ const unzip = async (inFile, outDir) => {
  */
 const untarGz = async (inFile, outDir) => {
   try {
-    await mkdir(outDir, { recursive: true });
-    await pipeline(
-      createReadStream(inFile),
-      createGunzip(),
-      tar.extract(outDir)
-    );
-    // workaround for GNUSparseFile.0 folder
-    const files = await readdir(outDir);
-    if (files.length > 0 && files[0] === "GNUSparseFile.0") {
-      const children = await readdir(join(outDir, "GNUSparseFile.0"));
-      for (const child of children) {
-        await rename(
-          join(outDir, "GNUSparseFile.0", child),
-          join(outDir, child)
-        );
-      }
-      await rm(join(outDir, "GNUSparseFile.0"), { recursive: true });
-    }
-    console.log(await readdir(outDir));
+    await execa("tar", ["xvf", inFile, "-C", outDir]);
   } catch (error) {
     throw new VError(error, `Failed to extract "${inFile}"`);
   }
