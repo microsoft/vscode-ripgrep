@@ -23,7 +23,8 @@ jobs:
           # caching node_modules
           path: |
             node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+            .cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('src/**/*.js') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
@@ -31,7 +32,8 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
-      - run: npm run postinstall
+        env:
+          XDG_CACHE_HOME: .cache
       - run: npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
