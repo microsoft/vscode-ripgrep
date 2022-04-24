@@ -1,4 +1,4 @@
-import { spawn } from "child_process";
+import { execa } from "execa";
 import { mkdtemp, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
@@ -11,23 +11,6 @@ const getTmpDir = () => {
 test("rgPath", async () => {
   const tmpDir = await getTmpDir();
   await writeFile(`${tmpDir}/sample-file.txt`, "sample text");
-  const childProcess = spawn(rgPath, ["sample", "."], {
-    stdio: "pipe",
-    cwd: tmpDir,
-  });
-  let result = "";
-  childProcess.stdout.on("data", (data) => {
-    result += data.toString();
-  });
-  await new Promise((resolve, reject) => {
-    childProcess.once("error", reject);
-    childProcess.once("exit", (code) => {
-      if (code === 0) {
-        resolve();
-      } else {
-        reject();
-      }
-    });
-  });
-  expect(result).toContain("sample-file.txt:sample text\n");
+  const { stdout } = await execa(rgPath, ["sample", "."], { cwd: tmpDir });
+  expect(stdout).toContain("sample-file.txt:sample text\n");
 });
