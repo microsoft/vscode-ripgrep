@@ -23,7 +23,7 @@ jobs:
           # caching node_modules
           path: |
             node_modules
-            .cache
+            bin
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('src/**/*.js') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
