@@ -85,6 +85,7 @@ const unzip = async (inFile, outDir) => {
  */
 const untarGz = async (inFile, outDir) => {
   try {
+    await mkdir(outDir, { recursive: true });
     await execa("tar", ["xvf", inFile, "-C", outDir]);
   } catch (error) {
     throw new VError(error, `Failed to extract "${inFile}"`);
