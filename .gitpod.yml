@@ -1,0 +1,8 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: npm ci
+ports:
+  - port: 6080
+    onOpen: open-preview
