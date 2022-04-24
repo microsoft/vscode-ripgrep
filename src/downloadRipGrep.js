@@ -1,6 +1,6 @@
 import extractZip from "extract-zip";
 import { createReadStream, createWriteStream } from "fs";
-import { mkdir } from "fs/promises";
+import { mkdir, readdir } from "fs/promises";
 import got from "got";
 import * as os from "os";
 import { dirname, join } from "path";
@@ -92,6 +92,7 @@ const untarGz = async (inFile, outDir) => {
       createGunzip(),
       tar.extract(outDir)
     );
+    console.log(await readdir(outDir));
   } catch (error) {
     throw new VError(error, `Failed to extract "${inFile}"`);
   }
