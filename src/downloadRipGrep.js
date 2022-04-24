@@ -1,6 +1,6 @@
 import extractZip from "extract-zip";
 import { createReadStream, createWriteStream } from "fs";
-import { mkdir, readdir } from "fs/promises";
+import { mkdir, readdir, rename, rm } from "fs/promises";
 import got from "got";
 import * as os from "os";
 import { dirname, join } from "path";
@@ -14,13 +14,13 @@ import { createGunzip } from "zlib";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const VERSION = process.env.RIPGREP_VERSION || "v13.0.0-2";
+const VERSION = process.env.RIPGREP_VERSION || "v13.0.0-4";
 const BIN_PATH = join(__dirname, "../bin");
 
 const getTarget = () => {
   const arch = process.env.npm_config_arch || os.arch();
-
-  switch (os.platform()) {
+  const platform = process.env.platform || os.platform();
+  switch (platform) {
     case "darwin":
       switch (arch) {
         case "arm64":
@@ -54,7 +54,7 @@ const getTarget = () => {
           return "i686-unknown-linux-musl.tar.gz";
       }
     default:
-      throw new VError("Unknown platform: " + os.platform());
+      throw new VError("Unknown platform: " + platform);
   }
 };
 
@@ -92,6 +92,18 @@ const untarGz = async (inFile, outDir) => {
       createGunzip(),
       tar.extract(outDir)
     );
+    // workaround for GNUSparseFile.0 folder
+    const files = await readdir(outDir);
+    if (files.length > 0 && files[0] === "GNUSparseFile.0") {
+      const children = await readdir(join(outDir, "GNUSparseFile.0"));
+      for (const child of children) {
+        await rename(
+          join(outDir, "GNUSparseFile.0", child),
+          join(outDir, child)
+        );
+      }
+      await rm(join(outDir, "GNUSparseFile.0"), { recursive: true });
+    }
     console.log(await readdir(outDir));
   } catch (error) {
     throw new VError(error, `Failed to extract "${inFile}"`);

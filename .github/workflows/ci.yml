@@ -14,6 +14,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18.0.0"
+      - name: Cache ripgrep binary
+        id: cache-ripgrep
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-ripgrep
+        with:
+          # caching ripgrep
+          path: |
+            .cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v3
@@ -23,8 +33,7 @@ jobs:
           # caching node_modules
           path: |
             node_modules
-            bin
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('src/**/*.js') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
@@ -32,6 +41,11 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+        env:
+          XDG_CACHE_HOME: .cache
+      - name: run postinstall
+        run: npm run postinstall
+        if: steps.cache-nodemodules.outputs.cache-hit == 'true'
         env:
           XDG_CACHE_HOME: .cache
       - run: npm test
