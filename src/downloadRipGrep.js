@@ -13,7 +13,8 @@ import { xdgCache } from "xdg-basedir";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const VERSION = process.env.RIPGREP_VERSION || "v13.0.0-4";
+const VERSION = process.env.RIPGREP_VERSION || "v12.1.1-4";
+console.log({ VERSION });
 const BIN_PATH = join(__dirname, "../bin");
 
 const getTarget = () => {
