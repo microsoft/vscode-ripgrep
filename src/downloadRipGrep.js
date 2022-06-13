@@ -1,19 +1,20 @@
 import { execa } from "execa";
 import extractZip from "extract-zip";
 import { createWriteStream } from "fs";
-import { mkdir, readdir } from "fs/promises";
+import { mkdir, rename } from "fs/promises";
 import got from "got";
 import * as os from "os";
 import { dirname, join } from "path";
 import { pathExists } from "path-exists";
 import { pipeline } from "stream/promises";
+import { temporaryFile } from "tempy";
 import { fileURLToPath } from "url";
 import VError from "verror";
 import { xdgCache } from "xdg-basedir";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const VERSION = process.env.RIPGREP_VERSION || "v12.1.1-4";
+const VERSION = process.env.RIPGREP_VERSION || "v13.0.0-4";
 console.log({ VERSION });
 const BIN_PATH = join(__dirname, "../bin");
 
@@ -60,8 +61,10 @@ const getTarget = () => {
 
 export const downloadFile = async (url, outFile) => {
   try {
+    const tmpFile = temporaryFile();
+    await pipeline(got.stream(url), createWriteStream(tmpFile));
     await mkdir(dirname(outFile), { recursive: true });
-    await pipeline(got.stream(url), createWriteStream(outFile));
+    await rename(tmpFile, outFile);
   } catch (error) {
     throw new VError(error, `Failed to download "${url}"`);
   }

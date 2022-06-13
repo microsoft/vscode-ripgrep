@@ -24,6 +24,7 @@
     "extract-zip": "^2.0.1",
     "got": "^12.1.0",
     "path-exists": "^5.0.0",
+    "tempy": "^3.0.0",
     "verror": "^1.10.1",
     "xdg-basedir": "^5.1.0"
   },
