@@ -9,7 +9,8 @@ import { temporaryFile } from "tempy";
 import { fileURLToPath } from "url";
 import VError from "verror";
 import { xdgCache } from "xdg-basedir";
-import { move, mkdir, createWriteStream } from "fs-extra";
+import fsExtra from "fs-extra";
+const { mkdir, createWriteStream, move } = fsExtra;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
