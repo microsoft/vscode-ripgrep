@@ -1,7 +1,5 @@
 import { execa } from "execa";
 import extractZip from "extract-zip";
-import { createWriteStream } from "fs";
-import { mkdir, rename } from "fs/promises";
 import got from "got";
 import * as os from "os";
 import { dirname, join } from "path";
@@ -11,6 +9,7 @@ import { temporaryFile } from "tempy";
 import { fileURLToPath } from "url";
 import VError from "verror";
 import { xdgCache } from "xdg-basedir";
+import { move, mkdir, createWriteStream } from "fs-extra";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -64,7 +63,7 @@ export const downloadFile = async (url, outFile) => {
     const tmpFile = temporaryFile();
     await pipeline(got.stream(url), createWriteStream(tmpFile));
     await mkdir(dirname(outFile), { recursive: true });
-    await rename(tmpFile, outFile);
+    await move(tmpFile, outFile);
   } catch (error) {
     throw new VError(error, `Failed to download "${url}"`);
   }
