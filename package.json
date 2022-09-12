@@ -1,6 +1,6 @@
 {
   "name": "vscode-ripgrep-with-github-api-error-fix",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "A module for using ripgrep in a Node project",
   "main": "src/index.js",
   "typings": "src/index.d.ts",
