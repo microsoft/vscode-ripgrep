@@ -1,0 +1,38 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  branches:
+    include:
+      - main
+pr: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: microsoft/vscode-engineering
+      ref: main
+      endpoint: Monaco
+
+extends:
+  template: azure-pipelines/npm-package/pipeline.yml@templates
+  parameters:
+    npmPackages:
+      - name: ripgrep
+
+        buildPlatforms:
+          - name: Linux
+            nodeVersions:
+              - 16.x
+          - name: MacOS
+            nodeVersions:
+              - 16.x
+          - name: Windows
+            nodeVersions:
+              - 16.x
+
+        buildSteps:
+          - script: npm i
+            displayName: Install dependencies
+            env:
+              TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
