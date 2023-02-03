@@ -35,4 +35,4 @@ extends:
           - script: npm i
             displayName: Install dependencies
             env:
-              TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+              TOKEN_GITHUB: $(github-token-public-repos)
