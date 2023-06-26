@@ -41,6 +41,6 @@ extends:
           - script: npm i
             displayName: Install dependencies
             env:
-              TOKEN_GITHUB: $(github-token-public-repos)
+              GITHUB_TOKEN: $(github-token-public-repos)
 
         publishPackage: ${{ parameters.publishPackage }}
