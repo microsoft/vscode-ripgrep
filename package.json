@@ -1,6 +1,6 @@
 {
   "name": "@vscode/ripgrep",
-  "version": "1.15.5",
+  "version": "1.15.6",
   "description": "A module for using ripgrep in a Node project",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -14,13 +14,10 @@
   "author": "Rob Lourens",
   "license": "MIT",
   "dependencies": {
-    "https-proxy-agent": "^5.0.1",
+    "https-proxy-agent": "^7.0.2",
     "proxy-from-env": "^1.1.0"
   },
-  "overrides": {
-    "agent-base": "^6.0.2"
-  },
   "devDependencies": {
-    "@types/node": "^10.12.0"
+    "@types/node": "^20.8.4"
   }
 }
