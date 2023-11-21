@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "https-proxy-agent": "^7.0.2",
-    "jszip": "^3.10.1",
+    "yauzl": "^2.9.2",
     "proxy-from-env": "^1.1.0"
   },
   "devDependencies": {
