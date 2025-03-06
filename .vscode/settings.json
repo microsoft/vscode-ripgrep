@@ -1,0 +1,6 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "git.branchProtection": ["main"],
+    "git.branchProtectionPrompt": "alwaysCommitToNewBranch",
+    "editor.tabSize": 4
+}
