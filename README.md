@@ -7,6 +7,7 @@ This is an npm module for using [ripgrep](https://github.com/BurntSushi/ripgrep)
 - Ripgrep is built in [microsoft/ripgrep-prebuilt](https://github.com/microsoft/ripgrep-prebuilt) and published to releases for each tag in that repo.
 - In this module's postinstall task, it determines which platform it is being installed on and downloads the correct binary from ripgrep-prebuilt for the platform.
 - The path to the ripgrep binary is exported as `rgPath`.
+- Download Mirror url from environment variable RIPGREP_MIRROR_URL or npm config ripgrep_mirror_url
 
 ### Usage example
 
