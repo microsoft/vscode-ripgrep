@@ -16,7 +16,7 @@ resources:
 
 parameters:
   - name: publishPackage
-    displayName: 🚀 Publish @vscode/ripgrep
+    displayName: 🚀 Publish @vscode/ripgrep + per-platform packages
     type: boolean
     default: false
 
@@ -24,21 +24,119 @@ extends:
   template: azure-pipelines/npm-package/pipeline.yml@templates
   parameters:
     npmPackages:
+      # Wrapper package — pure JS, no native binary.
       - name: ripgrep
-
-        buildPlatforms:
-          - name: Linux
-            nodeVersions:
-              - 22.x
-          - name: MacOS
-            nodeVersions:
-              - 22.x
-          - name: Windows
-            nodeVersions:
-              - 22.x
-
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep
         buildSteps:
-          - script: npm i
-            displayName: Install dependencies
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync wrapper optionalDependencies
+        publishPackage: ${{ parameters.publishPackage }}
 
+      # Per-platform binary packages. Each downloads only its own ripgrep binary.
+      - name: ripgrep-darwin-x64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-darwin-x64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target x86_64-apple-darwin
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-darwin-arm64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-darwin-arm64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target aarch64-apple-darwin
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-win32-x64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-win32-x64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target x86_64-pc-windows-msvc
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-win32-arm64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-win32-arm64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target aarch64-pc-windows-msvc
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-win32-ia32
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-win32-ia32
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target i686-pc-windows-msvc
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-linux-x64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-x64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target x86_64-unknown-linux-musl
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-linux-arm64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-arm64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target aarch64-unknown-linux-musl
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-linux-arm
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-arm
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target arm-unknown-linux-gnueabihf
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-linux-ppc64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-ppc64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target powerpc64le-unknown-linux-gnu
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-linux-riscv64
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-riscv64
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target riscv64gc-unknown-linux-gnu
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-linux-s390x
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-s390x
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target s390x-unknown-linux-gnu
+            displayName: Download ripgrep binary
+        publishPackage: ${{ parameters.publishPackage }}
+
+      - name: ripgrep-linux-ia32
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-ia32
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target i686-unknown-linux-musl
+            displayName: Download ripgrep binary
         publishPackage: ${{ parameters.publishPackage }}

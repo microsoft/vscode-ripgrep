@@ -1,0 +1,19 @@
+{
+  "name": "@vscode/ripgrep-linux-riscv64",
+  "version": "1.18.0",
+  "description": "ripgrep binary for linux-riscv64. Used by @vscode/ripgrep.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-ripgrep"
+  },
+  "license": "MIT",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "riscv64"
+  ],
+  "files": [
+    "bin/"
+  ]
+}
