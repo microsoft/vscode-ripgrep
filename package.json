@@ -1,24 +1,23 @@
 {
-  "name": "@vscode/ripgrep",
-  "version": "1.17.1",
-  "description": "A module for using ripgrep in a Node project",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "name": "vscode-ripgrep-monorepo",
+  "version": "1.18.0",
+  "private": true,
+  "description": "Monorepo for @vscode/ripgrep and its per-platform binary packages.",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/vscode-ripgrep"
   },
-  "scripts": {
-    "postinstall": "node ./lib/postinstall.js"
-  },
-  "author": "Rob Lourens",
   "license": "MIT",
-  "dependencies": {
-    "https-proxy-agent": "^7.0.2",
-    "yauzl": "^3.2.1",
-    "proxy-from-env": "^1.1.0"
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "sync-packages": "node ./build/sync-packages.js",
+    "prepare-binaries": "node ./build/prepare-binaries.js",
+    "update-lock": "node ./build/prepare-binaries.js --update-lock"
   },
   "devDependencies": {
     "@types/node": "^20.8.4"
   }
 }
+

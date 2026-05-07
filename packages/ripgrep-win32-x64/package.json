@@ -1,0 +1,19 @@
+{
+  "name": "@vscode/ripgrep-win32-x64",
+  "version": "1.18.0",
+  "description": "ripgrep binary for win32-x64. Used by @vscode/ripgrep.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-ripgrep"
+  },
+  "license": "MIT",
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "files": [
+    "bin/"
+  ]
+}

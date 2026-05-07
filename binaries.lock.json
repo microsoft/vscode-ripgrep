@@ -1,0 +1,50 @@
+{
+  "aarch64-apple-darwin": {
+    "version": "v15.0.1",
+    "sha256": "2fa16464fd8638588a67c7fc172d3c4b57fbdc65dff366e10b0b0e90734628a6"
+  },
+  "aarch64-pc-windows-msvc": {
+    "version": "v15.0.1",
+    "sha256": "cc36bae403f25c838d25a3c65ba64f38cc00904652e89d6377b5ceaf66df8432"
+  },
+  "aarch64-unknown-linux-musl": {
+    "version": "v15.0.1",
+    "sha256": "dd3738a4b6e8df0fb3bc3edc5af352c4c39e0d97ad118a23e5176bdc5d48ba08"
+  },
+  "arm-unknown-linux-gnueabihf": {
+    "version": "v13.0.0-4",
+    "sha256": "14934deb7be2682325afa78b3ed1ffc3ce52ad8f490e437bba7871e5a09bc33c"
+  },
+  "i686-pc-windows-msvc": {
+    "version": "v15.0.1",
+    "sha256": "8312fe6c4cb10c5913461426d4e817870fbd3cca120677d6e5b8e790d7f4a972"
+  },
+  "i686-unknown-linux-musl": {
+    "version": "v15.0.1",
+    "sha256": "f2eb536f360c0148116fe6d6ba267ad8dcb127fa5a876596838b0d4d19434b86"
+  },
+  "powerpc64le-unknown-linux-gnu": {
+    "version": "v13.0.0-4",
+    "sha256": "3ddd7c0797c14cefd3ee61f13f15ac219bfecee8e6f6e27fd15c102ef229653a"
+  },
+  "riscv64gc-unknown-linux-gnu": {
+    "version": "v15.0.1",
+    "sha256": "aa988531098bf2472b1b402ab4e8a45d5a168106b30dcf74220d36d930e6869d"
+  },
+  "s390x-unknown-linux-gnu": {
+    "version": "v13.0.0-4",
+    "sha256": "61fa877688b721897cee33d572b64d8217ef16fe2cecf5f6f899f5ce55870e28"
+  },
+  "x86_64-apple-darwin": {
+    "version": "v15.0.1",
+    "sha256": "591c693e80bb444ef1907b2a906feb9c77bcafe1cdf509107cc75dcf0e875bd2"
+  },
+  "x86_64-pc-windows-msvc": {
+    "version": "v15.0.1",
+    "sha256": "bd28761f4918ea8fcb7a95f636b4422a915d55af268d9805be82d8ce0fdfc823"
+  },
+  "x86_64-unknown-linux-musl": {
+    "version": "v15.0.1",
+    "sha256": "4499958bfd5252df3d9e7504127fd448e4a14fbf2805ef4f14baaa1bcf775188"
+  }
+}

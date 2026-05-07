@@ -1,0 +1,19 @@
+{
+  "name": "@vscode/ripgrep-linux-s390x",
+  "version": "1.18.0",
+  "description": "ripgrep binary for linux-s390x. Used by @vscode/ripgrep.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-ripgrep"
+  },
+  "license": "MIT",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "s390x"
+  ],
+  "files": [
+    "bin/"
+  ]
+}
