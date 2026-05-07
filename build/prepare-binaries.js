@@ -162,9 +162,21 @@ async function main() {
             newLock[platform.target] = expected;
         }
 
-        const flag = isWindows ? '-xf' : '-xzf';
-        execSync(`tar ${flag} "${archive}" -C "${binDir}" ${binaryName}`, { stdio: 'inherit' });
-        if (!isWindows) {
+        // Windows builds ship as .zip; Linux/macOS as .tar.gz. The host agent
+        // running this script may differ from the target OS (e.g. Linux CI
+        // building the Windows package), so pick the extractor based on the
+        // archive format and the host's available tools:
+        //   - .tar.gz: GNU/bsdtar handle this everywhere -> `tar -xzf`
+        //   - .zip on Windows host: bsdtar ships with Windows -> `tar -xf`
+        //   - .zip on POSIX host: GNU tar can't read zip -> use `unzip`
+        if (isWindows) {
+            if (process.platform === 'win32') {
+                execSync(`tar -xf "${archive}" -C "${binDir}" ${binaryName}`, { stdio: 'inherit' });
+            } else {
+                execSync(`unzip -o -j "${archive}" "${binaryName}" -d "${binDir}"`, { stdio: 'inherit' });
+            }
+        } else {
+            execSync(`tar -xzf "${archive}" -C "${binDir}" ${binaryName}`, { stdio: 'inherit' });
             fs.chmodSync(binaryPath, 0o755);
         }
         fs.unlinkSync(archive);
