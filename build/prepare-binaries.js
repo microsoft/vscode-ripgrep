@@ -121,13 +121,29 @@ async function main() {
         const pkgShortName = packageNameFor(platform).replace('@vscode/', '');
         const binDir = path.join(PACKAGES_DIR, pkgShortName, 'bin');
         const binaryPath = path.join(binDir, binaryName);
+        const universalBinDir = path.join(PACKAGES_DIR, 'ripgrep-universal', 'bin', `${platform.os}-${platform.cpu}`);
+        const universalBinaryPath = path.join(universalBinDir, binaryName);
 
         if ((FORCE || UPDATE_LOCK) && fs.existsSync(binDir)) {
             fs.rmSync(binDir, { recursive: true });
         }
+        if ((FORCE || UPDATE_LOCK) && fs.existsSync(universalBinDir)) {
+            fs.rmSync(universalBinDir, { recursive: true });
+        }
 
-        if (!FORCE && !UPDATE_LOCK && fs.existsSync(binaryPath)) {
+        if (!FORCE && !UPDATE_LOCK && fs.existsSync(binaryPath) && fs.existsSync(universalBinaryPath)) {
             console.log(`[skip] ${platform.target}: already present`);
+            newLock[platform.target] = lock[platform.target];
+            continue;
+        }
+
+        if (!FORCE && !UPDATE_LOCK && fs.existsSync(binaryPath) && !fs.existsSync(universalBinaryPath)) {
+            fs.mkdirSync(universalBinDir, { recursive: true });
+            fs.copyFileSync(binaryPath, universalBinaryPath);
+            if (!isWindows) {
+                fs.chmodSync(universalBinaryPath, 0o755);
+            }
+            console.log(`[mirror] ${platform.target}: copied to universal package`);
             newLock[platform.target] = lock[platform.target];
             continue;
         }
@@ -180,6 +196,13 @@ async function main() {
             fs.chmodSync(binaryPath, 0o755);
         }
         fs.unlinkSync(archive);
+
+        fs.mkdirSync(universalBinDir, { recursive: true });
+        fs.copyFileSync(binaryPath, universalBinaryPath);
+        if (!isWindows) {
+            fs.chmodSync(universalBinaryPath, 0o755);
+        }
+
         console.log(`[ok]    ${platform.target} -> ${path.relative(ROOT, binaryPath)}`);
     }
 

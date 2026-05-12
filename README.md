@@ -17,6 +17,14 @@ const { rgPath } = require('@vscode/ripgrep');
 // child_process.spawn(rgPath, ...)
 ```
 
+### Published packages
+
+This monorepo publishes three kinds of npm packages:
+
+- **`@vscode/ripgrep`** — the normal entry point. Pure JS wrapper; pulls in the per-platform binary package for the current platform via `optionalDependencies`. Use this for almost everything.
+- **`@vscode/ripgrep-<os>-<cpu>`** — the per-platform binary packages (e.g. `@vscode/ripgrep-linux-x64`). Installed transitively by `@vscode/ripgrep`. Not meant to be depended on directly.
+- **`@vscode/ripgrep-universal`** — a single tarball bundling **every** platform's binary. Use this when you need access to all platforms' binaries from one install — for example, when repackaging an app into cross-platform artifacts from one build host. Exports `rgPath` (current platform) and `binPathFor({ os, arch })` (any platform). Tarball is large (~60 MB).
+
 ### Updating ripgrep
 
 1. Edit the `VERSION` (or `MULTI_ARCH_VERSION`) constant in `lib/platforms.js`.
