@@ -140,3 +140,13 @@ extends:
           - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js --target i686-unknown-linux-musl
             displayName: Download ripgrep binary
         publishPackage: ${{ parameters.publishPackage }}
+
+      # Universal package — single tarball bundling every platform's binary.
+      - name: ripgrep-universal
+        workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-universal
+        buildSteps:
+          - script: node $(Build.SourcesDirectory)/build/sync-packages.js
+            displayName: Sync package manifest
+          - script: node $(Build.SourcesDirectory)/build/prepare-binaries.js
+            displayName: Download all ripgrep binaries
+        publishPackage: ${{ parameters.publishPackage }}

@@ -1,0 +1,25 @@
+{
+  "name": "@vscode/ripgrep-universal",
+  "version": "1.18.0",
+  "description": "A single npm package containing ripgrep binaries for every supported platform.",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib/",
+    "bin/",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-ripgrep"
+  },
+  "license": "MIT"
+}

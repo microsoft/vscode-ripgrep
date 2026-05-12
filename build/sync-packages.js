@@ -86,10 +86,68 @@ function syncWrapperPackage() {
     return writeIfChanged(wrapperPkgPath, json) ? 1 : 0;
 }
 
+function syncUniversalPackage() {
+    const pkgDir = path.join(PACKAGES_DIR, 'ripgrep-universal');
+    const pkgJson = {
+        name: '@vscode/ripgrep-universal',
+        version: VERSION,
+        description: 'A single npm package containing ripgrep binaries for every supported platform.',
+        type: 'module',
+        main: './lib/index.js',
+        types: './lib/index.d.ts',
+        exports: {
+            '.': {
+                types: './lib/index.d.ts',
+                default: './lib/index.js',
+            },
+        },
+        files: ['lib/', 'bin/', 'LICENSE', 'README.md'],
+        repository: {
+            type: 'git',
+            url: 'https://github.com/microsoft/vscode-ripgrep',
+        },
+        license: 'MIT',
+    };
+    const json = JSON.stringify(pkgJson, null, 2) + '\n';
+
+    const readme = `# @vscode/ripgrep-universal
+
+A single npm package bundling [ripgrep](https://github.com/BurntSushi/ripgrep) binaries for **every supported platform**.
+
+Use this package instead of [\`@vscode/ripgrep\`](https://www.npmjs.com/package/@vscode/ripgrep) when you need every platform's binary available from a single install — for example, when repackaging a Node application into cross-platform artifacts (VSIX, archives, installers) from one build host.
+
+The tarball is large (~60 MB) because it ships ${platforms.length} binaries. For normal application use, prefer \`@vscode/ripgrep\`, which installs only the binary for the current platform via \`optionalDependencies\`.
+
+## Usage
+
+\`\`\`js
+import { rgPath, binPathFor } from '@vscode/ripgrep-universal';
+
+// Path to the binary for the current platform/arch.
+console.log(rgPath);
+
+// Path to any platform's binary (useful for cross-platform packaging).
+const winPath = binPathFor({ os: 'win32', arch: 'x64' });
+const linuxArmPath = binPathFor({ os: 'linux', arch: 'arm64' });
+\`\`\`
+
+## Layout
+
+Binaries are placed under \`bin/<os>-<arch>/<rg|rg.exe>\`.
+`;
+
+    let changed = 0;
+    if (writeIfChanged(path.join(pkgDir, 'package.json'), json)) changed++;
+    if (writeIfChanged(path.join(pkgDir, 'README.md'), readme)) changed++;
+    if (writeIfChanged(path.join(pkgDir, 'LICENSE'), LICENSE)) changed++;
+    return changed;
+}
+
 function main() {
     const platformChanges = syncPlatformPackages();
     const wrapperChanges = syncWrapperPackage();
-    const total = platformChanges + wrapperChanges;
+    const universalChanges = syncUniversalPackage();
+    const total = platformChanges + wrapperChanges + universalChanges;
     if (total === 0) {
         console.log('All package manifests up to date.');
     } else {
