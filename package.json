@@ -12,6 +12,7 @@
     "packages/*"
   ],
   "scripts": {
+    "test": "node --test build/prepare-binaries.test.js",
     "sync-packages": "node ./build/sync-packages.js",
     "prepare-binaries": "node ./build/prepare-binaries.js",
     "update-lock": "node ./build/prepare-binaries.js --update-lock"

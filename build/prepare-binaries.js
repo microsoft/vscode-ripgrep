@@ -27,6 +27,7 @@ const REPO = 'microsoft/ripgrep-prebuilt';
 const ROOT = path.join(__dirname, '..');
 const PACKAGES_DIR = path.join(ROOT, 'packages');
 const LOCK_PATH = path.join(ROOT, 'binaries.lock.json');
+const MAX_REDIRECTS = 5;
 
 const argv = process.argv.slice(2);
 const FORCE = argv.includes('--force');
@@ -38,16 +39,36 @@ const ONLY_TARGET = targetIdx !== -1 ? argv[targetIdx + 1] : undefined;
  * @param {string} url
  * @param {string} dest
  * @param {Record<string, string>} headers
+ * @param {number} [depth]
  * @returns {Promise<void>}
  */
-function downloadToFile(url, dest, headers) {
+function downloadToFile(url, dest, headers, depth = 0) {
     return new Promise((resolve, reject) => {
         https.get(url, { headers: { 'user-agent': 'vscode-ripgrep', ...headers } }, res => {
             const { statusCode, headers: resHeaders } = res;
             const location = /** @type {string | undefined} */ (resHeaders.location);
             if ((statusCode === 301 || statusCode === 302) && location) {
                 res.resume();
-                return downloadToFile(location, dest, headers).then(resolve, reject);
+                if (depth >= MAX_REDIRECTS) {
+                    return reject(new Error(`Too many redirects: ${url}`));
+                }
+                let next;
+                try {
+                    next = new URL(location, url);
+                } catch (err) {
+                    return reject(err);
+                }
+                let nextHeaders = headers;
+                if (next.host !== new URL(url).host) {
+                    nextHeaders = {};
+                    for (const [key, value] of Object.entries(headers)) {
+                        const lowerKey = key.toLowerCase();
+                        if (lowerKey !== 'authorization' && lowerKey !== 'cookie' && lowerKey !== 'www-authenticate') {
+                            nextHeaders[key] = value;
+                        }
+                    }
+                }
+                return downloadToFile(next.href, dest, nextHeaders, depth + 1).then(resolve, reject);
             }
             if (statusCode !== 200) {
                 res.resume();
@@ -218,7 +239,11 @@ async function main() {
     }
 }
 
-main().catch(err => {
-    console.error(err);
-    process.exit(1);
-});
+if (require.main === module) {
+    main().catch(err => {
+        console.error(err);
+        process.exit(1);
+    });
+}
+
+module.exports = { downloadToFile };
