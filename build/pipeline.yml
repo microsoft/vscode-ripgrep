@@ -6,6 +6,10 @@ trigger:
       - main
 pr: none
 
+variables:
+  # Manual validation runs use the feature branch ref, not the PullRequest reason.
+  skipAPIScan: ${{ or(eq(variables['Build.Reason'], 'PullRequest'), not(or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), startsWith(variables['Build.SourceBranch'], 'refs/tags/v')))) }}
+
 resources:
   repositories:
     - repository: templates
@@ -26,6 +30,7 @@ extends:
     npmPackages:
       # Wrapper package — pure JS, no native binary.
       - name: ripgrep
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -34,6 +39,7 @@ extends:
 
       # Per-platform binary packages. Each downloads only its own ripgrep binary.
       - name: ripgrep-darwin-x64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-darwin-x64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -43,6 +49,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-darwin-arm64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-darwin-arm64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -52,6 +59,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-win32-x64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-win32-x64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -61,6 +69,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-win32-arm64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-win32-arm64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -70,6 +79,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-win32-ia32
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-win32-ia32
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -79,6 +89,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-linux-x64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-x64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -88,6 +99,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-linux-arm64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-arm64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -97,6 +109,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-linux-arm
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-arm
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -106,6 +119,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-linux-ppc64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-ppc64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -115,6 +129,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-linux-riscv64
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-riscv64
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -124,6 +139,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-linux-s390x
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-s390x
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -133,6 +149,7 @@ extends:
         publishPackage: ${{ parameters.publishPackage }}
 
       - name: ripgrep-linux-ia32
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-linux-ia32
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js
@@ -143,6 +160,7 @@ extends:
 
       # Universal package — single tarball bundling every platform's binary.
       - name: ripgrep-universal
+        skipAPIScan: ${{ eq(variables.skipAPIScan, 'True') }}
         workingDirectory: $(Build.SourcesDirectory)/packages/ripgrep-universal
         buildSteps:
           - script: node $(Build.SourcesDirectory)/build/sync-packages.js

@@ -50,6 +50,8 @@ Use this when upgrading to a new upstream [ripgrep-prebuilt](https://github.com/
 
 ## What CI does
 
+APIScan runs for each package on non-PR builds of `main`, `release/*` branches, and `v*` tags. Other refs, including manually queued feature branches, skip only APIScan.
+
 For each of the 13 entries in [build/pipeline.yml](build/pipeline.yml):
 
 - **Wrapper (`ripgrep`)**: runs `sync-packages.js` and publishes [packages/ripgrep/](packages/ripgrep/). No binary download.
